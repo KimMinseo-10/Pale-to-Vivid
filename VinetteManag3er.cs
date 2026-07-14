@@ -1,0 +1,39 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: VinetteManag3er
+// Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 40EE2C12-5186-4819-9200-6B792B4A111D
+// Assembly location: C:\Users\minse\Downloads\Pale to Vivid(2026학년도 1학기 개인프로젝트)\Pale2Vivid\2026_1st_solo_project_Data\Managed\Assembly-CSharp.dll
+
+using System.Collections;
+using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+
+#nullable disable
+public class VinetteManag3er : MonoBehaviour
+{
+  [SerializeField]
+  private Volume _volume;
+  private Vignette vignette;
+  private bool isworking;
+
+  private void Awake()
+  {
+    Vignette component;
+    if (!((Object) this._volume != (Object) null) || !this._volume.profile.TryGet<Vignette>(out component))
+      return;
+    this.vignette = component;
+  }
+
+  public IEnumerator VignetteOn()
+  {
+    if (!this.isworking)
+    {
+      this.isworking = true;
+      this.vignette.intensity.value = 0.5f;
+      yield return (object) new WaitForSeconds(0.5f);
+      this.vignette.intensity.value = 0.0f;
+      this.isworking = false;
+    }
+  }
+}
